@@ -1,26 +1,60 @@
 <!doctype html>
 <style>
-  html { margin: 0; padding: 0 }
+  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
+  html, body { margin: 0; padding: 0; background: black }
   body {
-    font-family: "Times New Roman", serif;
+    font-family: "Lora", serif;
     font-size: 2rem;
-    margin: 3rem 4rem;
-    padding: 0;
+    font-weight: 400;
   }
-  a { color: #6f2ba6; }
-  h1 { color: #521b80; }
+  a, h1 { color: #98a99e; }
   p, h1 { margin: 1rem 0; padding: 0; }
+  a { margin: -3px -8px; padding: 3px 8px; border-radius: 5px; }
+  a:hover { color: white; background: rgba(0, 0, 0, 0.8) }
+  video {
+    z-index: 0;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+  }
+  main {
+    min-width: 100%;
+    min-height: 100%;
+    z-index: 1;
+    position: absolute;
+    background-image: repeating-conic-gradient(rgba(0, 0, 0, 0.0) 0% 25%, rgba(0, 0, 0, 1.0) 0% 50%);
+    background-size: 4px 4px;
+    background-color: rgba(0, 0, 0, 0.5);
+    text-shadow: #444 1px 0 10px;
+  }
+  main > div {
+    padding: 3rem 4rem;
+    color: white;
+  }
 </style>
 <title>Armin Ronacher</title>
-<h1>Armin Ronacher</h1>
-<p>
-  I build software, particularly Open Source software.<br>
-  You might know me as creator of <a href="https://flask.palletsprojects.com/">Flask</a> or other Open Source projects.
-<ul>
-  <li>Read the <a href="https://lucumr.pocoo.org/">Blog</a>
-  <li>Follow <a href="https://bsky.app/profile/mitsuhiko.at">@mitsuhiko.at</a> on BlueSky, or <a href="https://twitter.com/@mitsuhiko">mitsuhiko</a> on Twitter
-  <li>Discover <a href="https://github.com/mitsuhiko">mitsuhiko</a> on GitHub
-  <li>You can also <a href="https://github.com/sponsors/mitsuhiko">sponsor me</a>
-  <li>Or <a href="mailto:armin.ronacher@active-4.com">send me an email</a>
-  <li>Or <a href="https://lucumr.pocoo.org/about/">read more about me</a>
-</ul>
+<video autoplay muted loop id="background">
+  <source src="background.mp4" type="video/mp4">
+</video>
+<main>
+  <div>
+    <h1>Armin Ronacher</h1>
+    <p>
+      I build software, particularly Open Source software.<br>
+      You might know me as creator of <a href="https://flask.palletsprojects.com/">Flask</a> or
+      <a href="https://lucumr.pocoo.org/projects/">other Open Source projects</a>.
+    <ul>
+      <li>Read the <a href="https://lucumr.pocoo.org/">Blog</a>
+      <li>Follow
+        <a href="https://www.threads.net/@the_mitsuhiko">@the_mitsuhiko</a> on Threads,
+        <a href="https://twitter.com/@mitsuhiko">mitsuhiko</a> on Twitter/X, or
+        <a href="https://bsky.app/profile/mitsuhiko.at">@mitsuhiko.at</a> on BlueSky (inactive),
+      <li>Discover <a href="https://github.com/mitsuhiko">mitsuhiko</a> on GitHub
+      <li>You can also <a href="https://github.com/sponsors/mitsuhiko">sponsor me</a>
+      <li>Or <a href="mailto:armin.ronacher@active-4.com">send me an email</a>
+      <li>Or <a href="https://lucumr.pocoo.org/about/">read more about me</a>
+    </ul>
+  </div>
+</main>

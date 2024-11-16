@@ -3,13 +3,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
-  html, body { margin: 0; padding: 0; background: black; overscroll-behavior-y: none }
+  html, body { margin: 0; padding: 0; background: #115ca1; overscroll-behavior-y: none }
   body {
     font-family: "Lora", serif;
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-weight: 400;
   }
-  a, h1 { color: #98a99e; }
+  a, h1 { color: #115ca1; }
   p, h1 { margin: 1rem 0; padding: 0; }
   a { margin: -3px -8px; padding: 3px 8px; border-radius: 5px; }
   a:hover { color: white; background: rgba(0, 0, 0, 0.8) }
@@ -20,6 +20,7 @@
     bottom: 0;
     min-width: 100%;
     min-height: 100%;
+    opacity: 0.5;
   }
   main {
     min-width: 100%;
@@ -28,43 +29,55 @@
     position: absolute;
     background-image: repeating-conic-gradient(rgba(0, 0, 0, 0.0) 0% 25%, rgba(0, 0, 0, 1.0) 0% 50%);
     background-size: 4px 4px;
-    background-color: rgba(0, 0, 0, 0.5);
-    text-shadow: #444 1px 0 10px;
+    background-color: rgba(5, 14, 62, 0.5);
   }
   main > div {
-    padding: 3rem 4rem;
-    color: white;
+    padding: 2rem;
+  }
+  main > div > article {
+    padding: 1rem 3rem;
+    max-width: 960px;
+    margin: 4rem auto 0;
+    color: black;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(17, 92, 161, 0.3);
   }
   @media only screen and (max-width: 960px) {
     body {
       font-size: 1.5rem;
     }
-    main > div {
+    main > div > article {
       padding: 1rem 1.5rem;
     }
   }
 </style>
 <title>Armin Ronacher</title>
 <video autoplay muted loop playsinline id="background">
-  <source src="background.mp4" type="video/mp4">
+  <source src="background_blue.mp4" type="video/mp4">
 </video>
 <main>
   <div>
-    <h1>Armin Ronacher</h1>
-    <p>
-      I build software, particularly Open Source software.<br>
-      You might know me as creator of <a href="https://flask.palletsprojects.com/">Flask</a> or
-      <a href="https://lucumr.pocoo.org/projects/">other Open Source projects</a>.
-    <ul>
-      <li>Read the <a href="https://lucumr.pocoo.org/">Blog</a>
-      <li>Follow
-        <a href="https://www.threads.net/@the_mitsuhiko">@the_mitsuhiko</a> on Threads,
-        <a href="https://twitter.com/@mitsuhiko">mitsuhiko</a> on Twitter/X, or
-        <a href="https://bsky.app/profile/mitsuhiko.at">@mitsuhiko.at</a> on BlueSky (inactive),
-      <li>Discover <a href="https://github.com/mitsuhiko">mitsuhiko</a> on GitHub
-      <li>You can also <a href="https://github.com/sponsors/mitsuhiko">sponsor me</a>
-      <li>Or <a href="mailto:armin.ronacher@active-4.com">send me an email</a>
-      <li>Or <a href="https://lucumr.pocoo.org/about/">read more about me</a>
-    </ul>
+    <article>
+      <h1>Armin Ronacher</h1>
+      <p>
+        I build software — particularly Open Source software — and teams.<br>
+        You might know me as creator of <a href="https://flask.palletsprojects.com/">Flask</a> or
+        <a href="https://lucumr.pocoo.org/projects/">other Open Source projects</a>.
+      <p>
+        During the day I pour my energy into <a href="https://sentry.io/welcome/">Sentry</a>.
+        On the side I love to help people with their problems, and learn about their businesses.
+      <ul>
+        <li>Read my <a href="https://lucumr.pocoo.org/">Blog</a>
+        <li>Follow
+          <a href="https://bsky.app/profile/mitsuhiko.at">@mitsuhiko.at</a> on BlueSky,
+          <a href="https://twitter.com/@mitsuhiko">mitsuhiko</a> on Twitter/X, or
+          <a href="https://www.threads.net/@the_mitsuhiko">@the_mitsuhiko</a> on Threads (inactive),
+        <li>Find me as <a href="https://github.com/mitsuhiko">mitsuhiko</a> on GitHub
+        <li>You can also <a href="https://github.com/sponsors/mitsuhiko">sponsor me</a>
+        <li>Or <a href="mailto:armin.ronacher@active-4.com">send me an email</a>
+        <li>Or <a href="https://lucumr.pocoo.org/about/">read more about me</a>
+      </ul>
+    </article>
   </div>
 </main>

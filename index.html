@@ -1,15 +1,18 @@
 <!doctype html>
 <meta charset=utf-8>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500&display=block" rel="stylesheet">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap');
   html, body { margin: 0; padding: 0; background: #115ca1; overscroll-behavior-y: none }
   body {
     font-family: "Lora", serif;
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: 400;
   }
-  a, h1 { color: #115ca1; }
+  h1 { font-weight: 500; font-size: 3rem; }
+  a, h1 { color: #115ca1 }
   p, h1 { margin: 1rem 0; padding: 0; }
   a { margin: -3px -8px; padding: 3px 8px; border-radius: 5px; }
   a:hover { color: white; background: rgba(0, 0, 0, 0.8) }
@@ -20,7 +23,8 @@
     bottom: 0;
     min-width: 100%;
     min-height: 100%;
-    opacity: 0.5;
+    opacity: 0.0;
+    transition: opacity 1s;
   }
   main {
     min-width: 100%;
@@ -41,7 +45,11 @@
     color: black;
     background-color: white;
     border-radius: 1rem;
-    box-shadow: 0 4px 16px rgba(17, 92, 161, 0.3);
+    box-shadow: 0 8px 32px rgba(7, 49, 90, 0.8);
+  }
+  img.avatar {
+    float: right;
+    border-radius: 50%;
   }
   @media only screen and (max-width: 960px) {
     body {
@@ -53,15 +61,32 @@
   }
 </style>
 <title>Armin Ronacher</title>
-<video autoplay muted loop playsinline id="background">
+<video autoplay muted loop playsinline id="background" hidden>
   <source src="background_blue.mp4" type="video/mp4">
 </video>
+<script>
+  const video = document.getElementById('background');
+  video.hidden = false;
+  function fadeInVideo() {
+    requestAnimationFrame(() => {
+      video.style.opacity = '0.5';
+    });
+  }
+  if (video.readyState >= 4) {
+    fadeInVideo();
+  } else {
+    video.addEventListener('loadeddata', fadeInVideo);
+  }
+</script>
 <main>
   <div>
     <article>
       <h1>Armin Ronacher</h1>
       <p>
-        I build software — particularly Open Source software — and teams.<br>
+        <img src="avatar-large.jpg" alt="" width="150" height="150" class="avatar">
+      </p>
+      <p>
+        I build teams and software — particularly Open Source software.<br>
         You might know me as creator of <a href="https://flask.palletsprojects.com/">Flask</a> or
         <a href="https://lucumr.pocoo.org/projects/">other Open Source projects</a>.
       <p>
@@ -69,10 +94,9 @@
         On the side I love to help people with their problems, and learn about their businesses.
       <ul>
         <li>Read my <a href="https://lucumr.pocoo.org/">Blog</a>
-        <li>Follow
-          <a href="https://bsky.app/profile/mitsuhiko.at">@mitsuhiko.at</a> on BlueSky,
-          <a href="https://twitter.com/@mitsuhiko">mitsuhiko</a> on Twitter/X, or
-          <a href="https://www.threads.net/@the_mitsuhiko">@the_mitsuhiko</a> on Threads (inactive),
+        <li>Follow me as
+          <a href="https://bsky.app/profile/mitsuhiko.at">@mitsuhiko.at</a> on Bluesky or
+          <a href="https://twitter.com/@mitsuhiko">mitsuhiko</a> on Twitter/X
         <li>Find me as <a href="https://github.com/mitsuhiko">mitsuhiko</a> on GitHub
         <li>You can also <a href="https://github.com/sponsors/mitsuhiko">sponsor me</a>
         <li>Or <a href="mailto:armin.ronacher@active-4.com">send me an email</a>

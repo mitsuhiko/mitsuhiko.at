@@ -50,13 +50,32 @@
   img.avatar {
     float: right;
     border-radius: 50%;
+    margin: 0 0 0.3rem 0.3rem;
   }
   @media only screen and (max-width: 960px) {
     body {
       font-size: 1.5rem;
     }
+    h1 {
+      font-size: 2rem;
+      margin: 0;
+    }
     main > div > article {
       padding: 1rem 1.5rem;
+      border-radius: 0.5rem;
+      margin-top: 1rem;
+    }
+  }
+  @media only screen and (max-width: 560px) {
+    body {
+      font-size: 1.2rem;
+    }
+    h1 {
+      font-size: 2rem;
+    }
+    img.avatar {
+      width: 100px;
+      height: 100px;
     }
   }
 </style>

@@ -86,27 +86,39 @@
   video.crossOrigin = 'anonymous';
   video.loop = true;
   video.muted = true;
+  video.autoplay = true;
   video.playsInline = true;
   video.src = 'background_blue.mp4';
+
+  const fallbackImage = new Image();
+  fallbackImage.crossOrigin = 'anonymous';
+  fallbackImage.src = 'background_blue_fallback.jpg';
 
   let texture = null;
   let texBuffer = null;
   let resolutionLoc = null;
+  let animationId = null;
+  let currentSource = null;  // 'video' or 'image'
+  let videoPlaying = false;
 
-  function setupCanvas() {
+  function setupCanvas(source) {
+    const sourceWidth = source === video ? video.videoWidth : fallbackImage.naturalWidth;
+    const sourceHeight = source === video ? video.videoHeight : fallbackImage.naturalHeight;
+    if (!sourceWidth || !sourceHeight) return;
+
     canvas.width = canvas.offsetWidth * window.devicePixelRatio;
     canvas.height = canvas.offsetHeight * window.devicePixelRatio;
     gl.viewport(0, 0, canvas.width, canvas.height);
 
     const canvasAspect = canvas.width / canvas.height;
-    const videoAspect = video.videoWidth / video.videoHeight;
+    const sourceAspect = sourceWidth / sourceHeight;
     let texTop = 1, texBottom = 0, texLeft = 0, texRight = 1;
-    if (videoAspect > canvasAspect) {
-      const scale = canvasAspect / videoAspect;
+    if (sourceAspect > canvasAspect) {
+      const scale = canvasAspect / sourceAspect;
       texLeft = (1 - scale) / 2;
       texRight = 1 - texLeft;
     } else {
-      const scale = videoAspect / canvasAspect;
+      const scale = sourceAspect / canvasAspect;
       texTop = scale;
       texBottom = 0;
     }
@@ -134,25 +146,81 @@
 
     resolutionLoc = gl.getUniformLocation(program, 'u_resolution');
     gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
+
+    currentSource = source === video ? 'video' : 'image';
   }
 
   function render() {
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, texture);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
+    const source = currentSource === 'video' ? video : fallbackImage;
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, source);
     gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-    requestAnimationFrame(render);
+    // Only keep animating if video is playing, otherwise static image is fine
+    if (currentSource === 'video' && videoPlaying) {
+      animationId = requestAnimationFrame(render);
+    }
   }
 
+  function tryPlayVideo() {
+    if (videoPlaying) return;
+    video.play().then(function() {
+      videoPlaying = true;
+      // Switch to video source if we were showing fallback
+      if (currentSource === 'image' && video.readyState >= 2) {
+        setupCanvas(video);
+      }
+      if (!animationId) {
+        render();
+      }
+    }).catch(function() {
+      // Autoplay blocked - we'll try again on user interaction
+    });
+  }
+
+  // Try to start video on first user interaction (mobile Safari workaround)
+  function onFirstInteraction() {
+    tryPlayVideo();
+    document.removeEventListener('click', onFirstInteraction);
+    document.removeEventListener('touchstart', onFirstInteraction);
+    document.removeEventListener('keydown', onFirstInteraction);
+    document.removeEventListener('scroll', onFirstInteraction);
+  }
+
+  document.addEventListener('click', onFirstInteraction);
+  document.addEventListener('touchstart', onFirstInteraction);
+  document.addEventListener('keydown', onFirstInteraction);
+  document.addEventListener('scroll', onFirstInteraction);
+
+  // Start with fallback image if it loads first
+  fallbackImage.addEventListener('load', function() {
+    if (!currentSource) {
+      setupCanvas(fallbackImage);
+      render();
+    }
+  });
+
   video.addEventListener('loadeddata', function() {
-    setupCanvas();
-    video.play();
-    render();
+    // If video loads, try to play it
+    video.play().then(function() {
+      videoPlaying = true;
+      setupCanvas(video);
+      render();
+    }).catch(function() {
+      // Autoplay blocked - use fallback image if available
+      if (fallbackImage.complete && fallbackImage.naturalWidth) {
+        setupCanvas(fallbackImage);
+        render();
+      }
+      // Will retry on user interaction
+    });
   });
 
   window.addEventListener('resize', function() {
-    if (video.readyState >= 2) {
-      setupCanvas();
+    if (currentSource === 'video' && video.readyState >= 2) {
+      setupCanvas(video);
+    } else if (currentSource === 'image' && fallbackImage.complete) {
+      setupCanvas(fallbackImage);
     }
   });
 })();
